@@ -40,8 +40,10 @@ class LoginForm(FlaskForm):
 class StudentForm(FlaskForm):
     student = SelectField("student", choices=[], render_kw={"class": "form-control"})
 
+
 class TeacherForm(FlaskForm):
     teacher = SelectField("teacher", choices=[], render_kw={"class": "form-control"})
+
 
 class AdminCreateUserForm(FlaskForm):
     name = StringField("Имя", validators=[DataRequired(), Length(min=2, max=100)])
@@ -62,6 +64,7 @@ class AdminCreateUserForm(FlaskForm):
     def validate_login(self, login):
         if User.query.filter_by(login=login.data).first():
             raise ValidationError('Данное имя пользователя уже занято!')
+
 
 class ProfileForm(FlaskForm):
     name = StringField(
