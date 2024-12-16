@@ -3,10 +3,10 @@ name: Flask Application CI
 on:
   push:
     branches:
-      - second_branch  # Запуск при пуше в main
+      - first_branch  # Запуск при пуше в main
   pull_request:
     branches:
-      - second_branch  # Запуск при создании pull request в main
+      - first_branch  # Запуск при создании pull request в main
 
 jobs:
   lint-and-syntax-check:
