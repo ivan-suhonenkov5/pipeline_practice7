@@ -15,7 +15,7 @@ def dashboard():
     if current_user.role.name != "admin":
         return redirect(url_for("user.login"))
     # Получаем список всех пользователей
-    users = User.query.all()
+    users = User.query.all(
     return render_template("admin/dashboard.html", users=users)
 
 
