@@ -7,8 +7,6 @@ from ..forms import StudentForm, TeacherForm
 from ..models.models import Post, User, Role
 
 post = Blueprint("post", __name__)
-
-
 @post.route("/", methods=["POST", "GET"])
 def all():
     form = TeacherForm()
@@ -53,7 +51,6 @@ def create():
             print(str(e))
 
     return render_template("post/create.html", form=form)
-
 
 @post.route("/post/<int:id>/update", methods=["POST", "GET"])
 @login_required
