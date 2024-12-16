@@ -1,0 +1,60 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Добавление темы{% endblock %}
+
+{% block content %}
+<!-- Кнопка для создания бэкапа -->
+<div class="backup-section">
+    <a href="{{ url_for('backup.backup_database') }}" class="backup-button">Создать бэкап данных</a>
+</div>
+
+{% if session.get('backup_file') %}
+<div class="backup-download-section">
+    <a href="{{ url_for('backup.download_backup') }}" class="backup-download-button">Скачать бэкап</a>
+</div>
+{% endif %}
+
+<!-- Загрузка бэкапа -->
+<div class="upload-section">
+    <h3 class="upload-title">Загрузить бэкап</h3>
+    <form action="{{ url_for('backup.upload_backup') }}" method="post" enctype="multipart/form-data"
+          class="upload-form">
+        <div class="file-upload-container">
+            <label for="file-upload" class="file-upload-label">
+                <i class="fas fa-upload"></i> Выберите файл
+            </label>
+            <input type="file" id="file-upload" name="file" class="file-upload-input" required/>
+            <span id="file-name" class="file-name">Файл не выбран</span>
+        </div>
+        <button type="submit" class="upload-button">
+            <i class="fas fa-cloud-upload-alt"></i> Загрузить
+        </button>
+    </form>
+</div>
+
+<!-- Форма для добавления темы -->
+<form method="post" class="form-control d-flex flex-column gap-2">
+    <input name="subject" type="text" placeholder="Тема" class="form-control">
+    {{ form.student }}
+    <input value="Добавить" type="submit" class="btn btn-success">
+</form>
+{% endblock %}
+
+{% block script %}
+<script>
+    // Обработчик для отображения имени выбранного файла
+    document.addEventListener("DOMContentLoaded", () => {
+        const fileInput = document.getElementById("file-upload");
+        const fileName = document.getElementById("file-name");
+
+        fileInput.addEventListener("change", () => {
+            // Проверяем, выбран ли файл
+            if (fileInput.files.length > 0) {
+                fileName.textContent = fileInput.files[0].name; // Устанавливаем имя файла
+            } else {
+                fileName.textContent = "Файл не выбран"; // Сбрасываем текст
+            }
+        });
+    });
+</script>
+{% endblock %}

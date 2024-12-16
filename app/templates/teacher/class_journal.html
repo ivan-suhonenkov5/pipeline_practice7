@@ -1,0 +1,68 @@
+{% extends "main/base.html" %}
+
+{% block title %}Журнал - {{ classroom.name }} - {{ subject.name }}{% endblock %}
+
+{% block content %}
+<div class="journal-container">
+    <h1>{{ classroom.name }} - {{ subject.name }}</h1>
+    <p>Журнал оценок</p>
+    <form id="grade-form">
+        <table>
+            <thead>
+            <tr>
+                <th>Студент</th>
+                {% for lesson in lessons %}
+                <th>{{ lesson.date.strftime('%m-%d') }}</th>
+                {% endfor %}
+            </tr>
+            </thead>
+            <tbody>
+            {% for student in journal %}
+            <tr>
+                <td>{{ student.name }}</td>
+                {% for grade_info in student.grades %}
+                <td>
+                    <input type="text"
+                           name="grades[{{ student.id }}][{{ grade_info.lesson_id }}]"
+                           value="{{ grade_info.grade if grade_info.grade != 'Пропуск' else '' }}"
+                           class="grade-input">
+                </td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+            </tbody>
+
+        </table>
+        <button type="submit" class="btn btn-primary">Сохранить изменения</button>
+    </form>
+    <a href="{{ url_for('teacher.dashboard') }}" class="btn btn-secondary">Назад</a>
+</div>
+
+<script>
+    document.getElementById('grade-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const formData = new FormData(this);
+
+        fetch("{{ url_for('teacher.update_grades') }}", {
+            method: "POST",
+            body: formData,
+            headers: {
+                "X-CSRFToken": " " // Если вы используете CSRF защиту
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert("Оценки успешно обновлены!");
+            } else {
+                alert("Произошла ошибка при обновлении оценок.");
+            }
+        })
+        .catch(error => {
+            console.error("Error:", error);
+            alert("Ошибка при отправке данных.");
+        });
+    });
+</script>
+{% endblock %}

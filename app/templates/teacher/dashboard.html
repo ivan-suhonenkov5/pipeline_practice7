@@ -1,0 +1,30 @@
+{% extends "main/base.html" %}
+
+{% block title %}Панель учителя{% endblock %}
+
+{% block content %}
+<div class="dashboard-container">
+    <h1 class="text-center">Мои классы</h1>
+    <div class="breadcrumb">
+        <span>Электронный журнал</span> / <span>Мои классы</span>
+    </div>
+    <div class="classes-grid">
+        {% if classes %}
+            {% for classroom, subjects in classes.items() %}
+            <div class="class-card">
+                <h2>{{ classroom.name }}</h2>
+                <p>Журнал:</p>
+                {% for subject in subjects %}
+                <div class="subject-card">
+                    <p>{{ subject.name }}</p>
+                    <a href="{{ url_for('teacher.class_journal', class_id=classroom.id, subject_id=subject.id) }}" class="btn btn-primary">Перейти в журнал</a>
+                </div>
+                {% endfor %}
+            </div>
+            {% endfor %}
+        {% else %}
+            <p>У вас пока нет назначенных классов.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

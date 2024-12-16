@@ -1,0 +1,37 @@
+<div class="page">
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <a href="{{ url_for('post.all') }}" class="sidebar-logo">
+        <svg width="106" height="24" viewBox="0 0 106 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- SVG path -->
+        </svg>
+      </a>
+    </div>
+    <nav class="sidebar-nav">
+      <ul>
+        <li><a href="{{ url_for('post.all') }}">Дом</a></li>
+        {% if current_user.is_authenticated and current_user.role.name == "teacher" %}
+        <li><a href="{{ url_for('post.create') }}">Добавить тему</a></li>
+        {% endif %}
+        {% if current_user.is_authenticated %}
+        <li><a href="{{ url_for('user.profile', user_id=current_user.id) }}">Учетная запись</a></li>
+        {% endif %}
+      </ul>
+    </nav>
+    <div class="sidebar-footer">
+      {% if current_user.is_authenticated %}
+      <span>Добро пожаловать, {{ current_user.login }}</span>
+      <a href="{{ url_for('user.logout') }}" class="btn btn-outline-light">Выйти</a>
+      {% else %}
+      <a href="{{ url_for('user.login') }}" class="btn btn-outline-light">Войти</a>
+      <a href="{{ url_for('user.register') }}" class="btn btn-warning">Регистрация</a>
+      {% endif %}
+    </div>
+  </aside>
+
+  <main>
+    <div class="content">
+      <!-- Здесь будет основной контент -->
+    </div>
+  </main>
+</div>
