@@ -1,25 +1,25 @@
-name: Flask Application CI
+name: Flask Application
 
 on:
   push:
     branches:
-      - first_branch  # Запуск при пуше в main
+      - first_branch
   pull_request:
     branches:
-      - first_branch  # Запуск при создании pull request в main
+      - first_branch
 
 jobs:
   lint-and-syntax-check:
-    runs-on: ubuntu-latest  # Используем последнюю версию Ubuntu
+    runs-on: ubuntu-latest
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v3  # Загружает репозиторий
+      uses: actions/checkout@v3
 
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
-        python-version: '3.11.9'  # Укажите используемую версию Python
+        python-version: '3.11.9'
 
     - name: Install dependencies
       run: |
@@ -27,7 +27,7 @@ jobs:
         pip install flake8  # Установка flake8 для проверки стиля кода
 
     - name: Run syntax check
-      run: python -m py_compile $(find . -name "*.py")  # Проверяет Python-файлы на синтаксические ошибки
+      run: python -m py_compile $(find . -name "*.py")
 
     - name: Run flake8 (style check)
-      run: flake8 . --count --max-line-length=79 --show-source --statistics  # Проверка стиля кода
+      run: flake8 . --count --max-line-length=79 --show-source --statistics
