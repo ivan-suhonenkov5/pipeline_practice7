@@ -119,7 +119,7 @@ def login():
             flash(f"Роль {user.role.name} не распознана. Обратитесь к администратору.", "danger")
             return redirect(url_for("user.login"))
         else:
-            flash(f"Ошибка входа. Пожалуйста, проверьте логин и пароль!", "danger")
+            flash(f"Ошибка входа для пользователя {user.name}. Пожалуйста, проверьте логин и пароль!", "danger")
     return render_template("user/login.html", form=form)
 
 

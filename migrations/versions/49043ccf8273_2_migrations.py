@@ -1,7 +1,7 @@
 """2 migrations
 
 Revision ID: 49043ccf8273
-Revises: 
+Revises:
 Create Date: 2024-12-05 19:28:39.921538
 
 """

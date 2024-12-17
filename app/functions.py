@@ -18,7 +18,7 @@ def save_picture(picture):
 
 # Итерация списков и словарей
 def recursive_flatten_iterator(d):
-    for k,v in d.items():
+    for k, v in d.items():
         if isinstance(v, list):
             yield v
         if isinstance(v, dict):
