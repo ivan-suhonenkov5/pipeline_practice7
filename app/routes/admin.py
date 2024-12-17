@@ -33,7 +33,7 @@ def create_user():
         # Используем bcrypt для хэширования пароля
         hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
         new_user = User(
-            login=form.login.data
+            login=form.login.data,
         password = hashed_password,
         name = form.name.data,
         avatar = avatar_filename,
@@ -44,7 +44,7 @@ def create_user():
         try:
             db.session.add(new_user)
             db.session.commit(
-                flash("Пользователь успешно создан.", "success")
+                flash("Пользователь успешно создан.", "success"))
             return redirect(url_for("admin.dashboard"))
         except Exception as e:
             db.session.rollback()
